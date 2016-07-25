@@ -148,13 +148,24 @@ class LinkedList
         _second_key_element.next = temp_element
         _first_key_previous.next = _second_key_element
       else # None of the elemenet is head
-        temp_element =  _second_key_element.next
 
-        _second_key_element.next = _first_key_element.next
+        # Not sure what was the issue in this login
+        # temp_element =  _second_key_element.next
+
+        # _second_key_element.next = _first_key_element.next
+        # _first_key_previous.next = _second_key_element
+
+        # _first_key_element.next   = temp_element
+        # _second_key_previous.next = _first_key_element
+
+
         _first_key_previous.next = _second_key_element
-
-        _first_key_element.next = temp_element
         _second_key_previous.next = _first_key_element
+
+        temp_element =  _second_key_element.next
+        _second_key_element.next = _first_key_element.next
+        _first_key_element.next = temp_element
+
       end
     else
       puts "element not found"
