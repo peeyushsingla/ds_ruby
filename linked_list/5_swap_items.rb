@@ -108,6 +108,60 @@ class LinkedList
     end
   end
 
+  def swap_the_element(_first_key, _second_key)
+    if _first_key.present? and _second_key.present? and _first_key != _second_key
+      _current_node   = self.head
+      _previous_node  = nil
+      while _current_node.present?
+        if _current_node.data == _first_key
+          _first_key_previous = _previous_node
+          _first_key_element  = _current_node
+        elsif _current_node.data == _second_key
+          _second_key_previous = _previous_node
+          _second_key_element  = _current_node
+        end
+        _previous_node  = _current_node
+        _current_node   = _current_node.next
+      end
+
+      swap(_first_key_previous, _first_key_element, _second_key_previous, _second_key_element)
+    end
+  end
+
+  # If element don't have anything in the corresponding previous key that means its head
+  def swap(_first_key_previous, _first_key_element, _second_key_previous, _second_key_element)
+    if _first_key_element.present? and _second_key_element.present?
+      if _first_key_previous.blank? #Frist key element is head element
+        temp_element = _second_key_element.next
+
+        _second_key_element.next = _first_key_element.next
+        self.head = _second_key_element
+
+        _first_key_element.next = temp_element
+        _second_key_previous.next = _first_key_element
+      elsif _second_key_previous.blank? #Second key element is head element
+        temp_element = _first_key_element.next
+
+        _first_key_element.next = _second_key_element.next
+        self.head = _first_key_element
+
+        _second_key_element.next = temp_element
+        _first_key_previous.next = _second_key_element
+      else # None of the elemenet is head
+        temp_element =  _second_key_element.next
+
+        _second_key_element.next = _first_key_element.next
+        _first_key_previous.next = _second_key_element
+
+        _first_key_element.next = temp_element
+        _second_key_previous.next = _first_key_element
+      end
+    else
+      puts "element not found"
+    end
+  end
+
+
 end
 
 class Node
@@ -124,23 +178,21 @@ llist   = LinkedList.new
 first   = Node.new(1)
 second  = Node.new(2)
 third   = Node.new(3)
+fourth  = Node.new(4)
 
 llist.head  = first
 first.next  = second
 second.next = third
-
+third.next  = fourth
 
 llist.insert_in_begining(7)
 puts llist.inspect
 
 llist.insert_at_end(10)
 
-puts llist.inspect
-
-puts llist.find_length_iteratively
+llist.print_list
 
 
-binding.pry
-puts "Recursively"
+llist.swap_the_element(1, 2)
 
-puts llist.find_length_recursively
+llist.print_list
