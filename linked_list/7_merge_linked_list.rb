@@ -26,10 +26,10 @@ class LinkedList
     loop do
     #   puts "testing"
       if _current_first_node.blank?
-        # _dummy_linked_list.next = _current_second_node
+        _dummy_linked_list.set_last(_current_second_node)
         break;
       elsif _current_second_node.blank?
-        # _dummy_linked_list.next = _current_first_node
+        _dummy_linked_list.set_last(_current_first_node)
         break
       else
 
@@ -43,9 +43,7 @@ class LinkedList
 
       end
     end
-
-    binding.pry
-    # puts "testing"
+    return _dummy_linked_list
   end
 
   def initialize
@@ -73,6 +71,15 @@ class LinkedList
       _current_node.next = _node
     end
   end
+
+  def set_last(_new_node)
+    current_node = self.head
+    while current_node.next.present?
+      current_node = current_node.next
+    end
+    current_node.next = _new_node
+  end
+
 
 end
 
@@ -106,10 +113,16 @@ fourth  = Node.new(22)
 
 _second_list.head  = first
 first.next  = second
-second.next = third
-third.next  = fourth
+# second.next = third
+# third.next  = fourth
 
-LinkedList.merge_sorted(_first_list, _second_list)
+_first_list.print_list
+puts ""
+_second_list.print_list
+
+merged_list = LinkedList.merge_sorted(_first_list, _second_list)
+puts ""
+merged_list.print_list
 
 # Requirements:-
 
